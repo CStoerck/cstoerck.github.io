@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movie Performance Case Study | Cody Stoerck</title>
+  <meta name="description" content="Recruiter-friendly case study for a Movie Performance analytics engineering pipeline using Amazon S3, Snowflake, dbt, Python, Power BI, and public movie datasets.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html">Cody Stoerck</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a class="breadcrumb" href="index.html#projects">← Back to projects</a>
+        <h1>Movie Performance Analytics Engineering Pipeline</h1>
+        <p class="lede">Movie Performance is an end-to-end analytics engineering project that turns public movie rating, genre, budget, and revenue datasets into business-ready entertainment reporting. Raw CSV files are staged in Amazon S3, loaded into Snowflake, transformed with dbt into analytical models, enriched with Python-supported genre logic, and visualized in Power BI for revenue, rating, genre, budget, and ROI analysis.</p>
+        <div class="button-row">
+          <a class="btn btn-primary" href="https://app.powerbi.com/view?r=eyJrIjoiZjYwZDdlMGYtZjY5OS00OWNiLWE3ZjUtZTVjNzM4Y2E4NjY0IiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" target="_blank" rel="noopener">Live Power BI Dashboard</a>
+          <a class="btn btn-secondary" href="https://github.com/CStoerck/netflix-data-engineering-pipeline.git" target="_blank" rel="noopener">GitHub Repository</a>
+        </div>
+      </div>
+    </section>
+    <section class="section section-band">
+      <div class="container case-layout">
+        <aside class="toc" aria-label="Case study sections">
+          <strong>Project Sections</strong>
+          <a href="#summary">Summary</a>
+          <a href="#problem">Business Problem</a>
+          <a href="#architecture">Solution Architecture</a>
+          <a href="#workflow">Transformation Layer</a>
+          <a href="#enrichment">Python Enrichment</a>
+          <a href="#reporting">Reporting Layer</a>
+          <a href="#skills">Skills</a>
+          <a href="#impact">Impact</a>
+        </aside>
+        <div>
+          <section class="case-section" id="summary">
+            <h2 class="case-card-title">Executive Summary</h2>
+            <ul>
+              <li>Built an end-to-end analytics pipeline that converts raw public movie datasets into trusted reporting for entertainment performance analysis.</li>
+              <li>Designed a workflow that stages CSV files in Amazon S3, loads raw data into Snowflake, transforms the warehouse with dbt, enriches genre logic with Python, and delivers Power BI reporting.</li>
+              <li>Modeled movie ratings, releases, genres, budgets, revenue, and ROI so business users can compare performance across decades and genres.</li>
+            </ul>
+            <div class="badges">
+              <span class="badge">Amazon S3</span>
+              <span class="badge">Snowflake</span>
+              <span class="badge">dbt</span>
+              <span class="badge">Python</span>
+              <span class="badge">Power BI</span>
+              <span class="badge">Kaggle</span>
+              <span class="badge">GitHub</span>
+            </div>
+          </section>
+          <section class="case-section" id="problem">
+            <h2 class="case-card-title">Business Problem</h2>
+            <ul>
+              <li>Movie performance data is valuable for streaming platforms, studios, and media analysts, but raw public datasets are spread across separate files.</li>
+              <li>Rating, genre, release, budget, revenue, and tag data must be cleaned and modeled before it can support reliable business analysis.</li>
+              <li>Business users need a curated reporting layer that makes it easy to evaluate genre performance, revenue growth, profitability, and movie-level ROI.</li>
+            </ul>
+            <div class="kpi-list">
+              <div><strong>Genre performance</strong><br>Which genres generate the highest revenue across decades?</div>
+              <div><strong>Revenue trends</strong><br>How does actual revenue compare against projected revenue over time?</div>
+              <div><strong>Profitability signals</strong><br>Which genres outperform the baseline profit expectation?</div>
+              <div><strong>Movie-level detail</strong><br>Which movies produce the highest revenue and return on investment?</div>
+            </div>
+          </section>
+          <section class="case-section" id="architecture">
+            <h2 class="case-card-title">Solution Architecture</h2>
+            <p>The pipeline follows a source-to-dashboard analytics workflow. Public movie CSV files are downloaded from Kaggle-style datasets and staged in Amazon S3. Snowflake loads those files into a raw schema through a configured external stage, preserving the source data before transformations are applied. dbt then builds source, dimension, fact, and mart models in Snowflake. Python supports genre normalization logic, and Power BI connects to the curated Snowflake models for business-facing reporting.</p>
+            <ul>
+              <li>Amazon S3 stores the raw movie CSV files before warehouse loading.</li>
+              <li>Snowflake separates raw landing tables from dbt-built analytical models in the `MOVIELENS` database.</li>
+              <li>dbt standardizes source data and creates analytics-ready dimension, fact, and mart models.</li>
+              <li>Python supports consistent genre ordering and enrichment logic for downstream analysis.</li>
+              <li>Power BI consumes the curated Snowflake models for interactive revenue, rating, genre, budget, and ROI reporting.</li>
+            </ul>
+            <figure class="figure">
+              <img src="assets/architecture-diagram.png" alt="Movie Performance architecture diagram showing Amazon S3 raw file storage, Snowflake raw and transformed layers, dbt transformations, Python enrichment, and Power BI reporting.">
+              <figcaption>End-to-end Movie Performance architecture showing raw movie data moving from Amazon S3 into Snowflake, transformed with dbt, enriched with Python, and consumed in Power BI.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/snowflake-warehouse-overview.PNG" alt="Snowflake warehouse screenshot showing the MOVIELENS database, raw landing tables, dbt-built development models, and a preview of the FCT_RATINGS table.">
+              <figcaption>Snowflake warehouse view showing raw landing tables, dbt-built analytical models, a configured stage, and the rating fact table used downstream.</figcaption>
+            </figure>
+          </section>
+          <section class="case-section" id="workflow">
+            <h2 class="case-card-title">Transformation Layer</h2>
+            <p>dbt transforms the raw Snowflake tables into analytics-ready models. The transformation layer is organized into source/staging, dimension, fact, and mart folders so raw standardization, analytical entities, measurable events, and final reporting outputs remain separated.</p>
+            <ul>
+              <li>Source and staging models standardize raw MovieLens-style files, rename fields, convert timestamps, and prepare clean model references.</li>
+              <li>Dimension models define analytical entities such as movies, users, movie tags, and genome tags.</li>
+              <li>Fact models organize ratings, genome relevance scores, revenue, budget, release, and ROI-oriented data.</li>
+              <li>The mart layer creates reporting-ready outputs for Power BI, including release metadata availability logic.</li>
+              <li>dbt documentation, tests, and lineage make the transformation workflow easier to inspect, validate, and maintain.</li>
+            </ul>
+            <div class="kpi-list">
+              <div><strong>Source and staging</strong><br>Standardizes raw movie files and prepares reliable inputs for downstream models.</div>
+              <div><strong>Dimensions</strong><br>Builds analytical entities for movies, users, movie tags, and genome tags.</div>
+              <div><strong>Facts</strong><br>Models ratings, genome scores, metadata, revenue, budget, and ROI-related measures.</div>
+              <div><strong>Mart</strong><br>Creates reporting-ready movie release data for dashboard consumption.</div>
+            </div>
+            <p>The <span class="code-like">fct_ratings</span> model is configured as an incremental dbt model. During future runs, it can process only newly added rating records instead of rebuilding the full ratings table, which supports a more scalable refresh pattern for large rating datasets.</p>
+            <div class="two-col">
+              <figure class="figure">
+                <img src="assets/movie-dbt-lineage.PNG" alt="dbt documentation screenshot for the Movie Performance project showing fct_ratings as an incremental model with lineage from src_ratings into fct_ratings and downstream models such as mart_movie_releases and movie_analysis.">
+                <figcaption>dbt lineage view showing the dependency path from source ratings into the incremental rating fact model and downstream reporting models.</figcaption>
+              </figure>
+              <figure class="figure">
+                <img src="assets/movie-dbt-models.PNG" alt="Visual Studio Code screenshot showing the Movie Performance dbt project with dim, fct, mart, and staging folders and the incremental fct_ratings SQL model open.">
+                <figcaption>dbt project structure showing staging, dimension, fact, and mart folders, with the incremental rating fact model open for review.</figcaption>
+              </figure>
+            </div>
+          </section>
+          <section class="case-section" id="enrichment">
+            <h2 class="case-card-title">Python Enrichment</h2>
+            <p>Python supports the enrichment layer by preparing genre logic for consistent analysis. The workflow uses pandas and a manually defined genre hierarchy to normalize raw genre strings and support cleaner genre ordering across reporting outputs.</p>
+            <ul>
+              <li>Organizes raw genre values into a more consistent analytical structure.</li>
+              <li>Supports genre comparison across revenue, budget, rating, and ROI metrics.</li>
+              <li>Improves dashboard readability by applying consistent genre ordering and category logic.</li>
+            </ul>
+          </section>
+          <section class="case-section" id="reporting">
+            <h2 class="case-card-title">Dashboard and Reporting Layer</h2>
+            <p>The Power BI reporting layer connects to curated Snowflake models and presents movie performance through executive-style KPIs and supporting visuals. The dashboard is designed to help users compare revenue growth, genre contribution, movie-level profitability, and performance against a baseline.</p>
+            <ul>
+              <li>KPI cards summarize movie count, average rating, average revenue, average budget, and average ROI.</li>
+              <li>Revenue by decade compares projected revenue against actual revenue trends.</li>
+              <li>Genre visuals show revenue contribution and profit performance against a baseline.</li>
+              <li>Movie-level detail tables support title, genre, rating, revenue, budget, and ROI review.</li>
+              <li>Interactive filters allow users to slice the report by decade, genre, rating range, and movie title.</li>
+            </ul>
+            <div class="dashboard-embed"><iframe title="Netflix dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiZjYwZDdlMGYtZjY5OS00OWNiLWE3ZjUtZTVjNzM4Y2E4NjY0IiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" frameborder="0" allowFullScreen="true"></iframe></div>
+          </section>
+          <section class="case-section" id="skills">
+            <h2 class="case-card-title">Skills Demonstrated</h2>
+            <ul>
+              <li>Built an end-to-end analytics pipeline that moves public movie datasets from Amazon S3 into Snowflake, dbt, Python, and Power BI.</li>
+              <li>Designed Snowflake raw and development schemas to keep source data separate from analytics-ready models.</li>
+              <li>Loaded raw CSV files into Snowflake using stages and warehouse load commands.</li>
+              <li>Modeled raw data into source/staging, dimension, fact, and mart layers with dbt.</li>
+              <li>Implemented incremental dbt modeling for the rating fact table to support scalable refresh behavior.</li>
+              <li>Used dbt documentation, lineage, tests, seeds, snapshots, and macros to strengthen transparency and maintainability.</li>
+              <li>Applied Python-supported genre normalization and enrichment logic for cleaner reporting outputs.</li>
+              <li>Built a Power BI dashboard for revenue, ratings, genre, budget, ROI, decade trends, and movie-level analysis.</li>
+              <li>Applied credential hygiene and public repository security practices using placeholders and external configuration.</li>
+            </ul>
+          </section>
+          <section class="case-section" id="impact">
+            <h2 class="case-card-title">Project Impact</h2>
+            <p>Movie Performance shows how raw public movie datasets can be converted into a reliable analytics product instead of remaining as disconnected CSV files. The project creates a clear path from raw data storage to warehouse modeling, enrichment, and dashboard reporting.</p>
+            <ul>
+              <li>Created an analytics workflow that connects cloud storage, Snowflake warehousing, dbt transformations, Python enrichment, and Power BI reporting.</li>
+              <li>Improved reporting readiness by turning raw movie ratings, genres, releases, budgets, and revenues into structured analytical models.</li>
+              <li>Supported faster genre and revenue analysis through dashboard views for decade trends, revenue share, movie-level ROI, and profit-vs-baseline performance.</li>
+              <li>Strengthened technical reviewability with dbt model organization, incremental modeling, documentation, lineage, and testing artifacts.</li>
+              <li>Demonstrated practical analytics engineering skills across data ingestion, transformation, enrichment, and business intelligence delivery.</li>
+            </ul>
+            <div class="button-row">
+              <a class="btn btn-primary" href="https://app.powerbi.com/view?r=eyJrIjoiZjYwZDdlMGYtZjY5OS00OWNiLWE3ZjUtZTVjNzM4Y2E4NjY0IiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" target="_blank" rel="noopener">View Live Dashboard</a>
+              <a class="btn btn-secondary" href="https://github.com/CStoerck/netflix-data-engineering-pipeline.git" target="_blank" rel="noopener">View GitHub Repository</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container">© 2026 Cody Stoerck. <a href="index.html">Back to portfolio home</a>.</div></footer>
+  <script>
+    document.querySelectorAll('.figure img').forEach((img) => {
+      img.setAttribute('tabindex', '0');
+      img.addEventListener('click', () => openImageModal(img));
+      img.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openImageModal(img);
+        }
+      });
+    });
+    function openImageModal(img) {
+      const modal = document.createElement('div');
+      modal.className = 'image-modal';
+      modal.innerHTML = `<button class="image-modal-close" aria-label="Close enlarged image">&times;</button><img src="${img.src}" alt="${img.alt}">`;
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal || event.target.classList.contains('image-modal-close')) modal.remove();
+      });
+      document.addEventListener('keydown', function closeOnEscape(event) {
+        if (event.key === 'Escape') { modal.remove(); document.removeEventListener('keydown', closeOnEscape); }
+      });
+      document.body.appendChild(modal);
+    }
+  </script>
+</body>
+</html>

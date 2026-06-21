@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Onyx Auto Case Study | Cody Stoerck</title>
+  <meta name="description" content="Recruiter-friendly case study for Onyx Auto, an end-to-end dealership analytics engineering platform using PHP, MySQL, Airbyte, Snowflake, dbt, Apache Airflow, Docker, Microsoft Teams alerts, and Power BI.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html">Cody Stoerck</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a class="breadcrumb" href="index.html#projects">← Back to projects</a>
+        <h1>Onyx Auto: End-to-End Dealership Analytics Engineering Platform</h1>
+        <p class="lede">Onyx Auto is an end-to-end analytics engineering project that shows how a used car dealership can turn raw operational data into automated business reporting. The project starts with a PHP and MySQL source application that captures dealership activity. Airbyte ingests the operational data into Snowflake. dbt then transforms the data using a medallion architecture with staging, intermediate, and mart layers. Power BI pulls data from Snowflake to visualize dealership performance, and Apache Airflow orchestrates the daily refresh workflow.</p>
+        <div class="button-row">
+          <a class="btn btn-primary" href="https://app.powerbi.com/view?r=eyJrIjoiZTUyOThhMmQtZDA0ZS00MDg3LTkwOWEtMTJiMTBiZGIwYmNkIiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" target="_blank" rel="noopener">Live Power BI Dashboard</a>
+          <a class="btn btn-secondary" href="https://github.com/CStoerck/Onyx-Auto-Dealership-Analytics-Platform.git" target="_blank" rel="noopener">GitHub Repository</a>
+        </div>
+      </div>
+    </section>
+    <section class="section section-band">
+      <div class="container case-layout">
+        <aside class="toc" aria-label="Case study sections">
+          <strong>Project Sections</strong>
+          <a href="#summary">Summary</a>
+          <a href="#problem">Business Problem</a>
+          <a href="#architecture">Solutions Architecture</a>
+          <a href="#workflow">Transformation Layer</a>
+          <a href="#reporting">Reporting Layer</a>
+          <a href="#automation">Orchestration</a>
+          <a href="#skills">Skills</a>
+          <a href="#impact">Impact</a>
+        </aside>
+        <div>
+          <section class="case-section" id="summary">
+            <h2 class="case-card-title">Executive Summary</h2>
+            <ul>
+              <li>Captured operational data and built an end-to-end analytics platform that turns the raw data into trusted reporting.</li>
+              <li>Designed a pipeline that ingests, cleans, transforms, models, and orchestrates dealership data for analytics.</li>
+            </ul>
+          </section>
+
+          <section class="case-section" id="problem">
+            <h2 class="case-card-title">Business Problem</h2>
+            <ul>
+              <li>Used car dealerships generate valuable data across multiple operational areas, including inventory, customers, sales, vendors, parts orders, and employees.</li>
+              <li>Transactional databases are useful for daily operations but are not optimized for executive reporting or analytics.</li>
+              <li>Business users need clean, structured reporting models to monitor performance, identify risks, and make faster operational decisions.</li>
+            </ul>
+            <div class="kpi-list">
+              <div><strong>Sales visibility</strong><br>How much net income and gross sales income has the dealership generated?</div>
+              <div><strong>Inventory health</strong><br>Which vehicles are staying in inventory too long?</div>
+              <div><strong>Sales performance</strong><br>Which sales agents are driving monthly performance?</div>
+              <div><strong>Seller risk</strong><br>Which sellers are associated with higher downstream parts costs?</div>
+            </div>
+          </section>
+
+          <section class="case-section" id="architecture">
+            <h2 class="case-card-title">Solutions Architecture</h2>
+            <p>The platform follows a source-to-dashboard analytics workflow. Dealership users enter operational records through a PHP frontend, and the data is stored in a MySQL transactional database. Airbyte then moves the source data into Snowflake, where dbt transforms the raw tables into clean reporting models across staging, intermediate, and mart layers. Power BI connects to the final mart layer for reporting, while Apache Airflow keeps the refresh process running in the right order.</p>
+            <ul>
+              <li>PHP frontend application captures operational records and stores them in a MySQL transactional database.</li>
+              <li>Airbyte ingests raw MySQL data into a Snowflake analytical database.</li>
+              <li>dbt transforms the raw data into analytics-ready tables through staging, intermediate, and mart layers.</li>
+              <li>Power BI consumes the final mart layer for executive reporting.</li>
+              <li>Apache Airflow orchestrates the refresh process and sends Microsoft Teams alerts when pipeline failures occur.</li>
+            </ul>
+            <figure class="figure">
+              <img src="assets/architecture_diagram.png" alt="Onyx Auto architecture diagram showing PHP and MySQL source systems, Airbyte ingestion, Snowflake raw staging intermediate and mart layers, dbt transformations, Power BI reporting, Airflow orchestration, Docker, and Microsoft Teams alerts.">
+              <figcaption>End-to-end Onyx Auto architecture showing the source-to-dashboard workflow.</figcaption>
+            </figure>
+          </section>
+
+          <section class="case-section" id="workflow">
+            <h2 class="case-card-title">Transformation Layer</h2>
+            <p>After Airbyte loads MySQL source data into Snowflake, dbt transforms the raw records into analytics-ready models. The transformation layer is organized into staging, intermediate, and mart schemas so data cleaning, reusable business logic, and final reporting outputs remain separated.</p>
+            <ul>
+              <li>Staging and intermediate models are materialized as views to keep early transformations lightweight.</li>
+              <li>Mart models are materialized as tables to provide stable reporting datasets for Power BI.</li>
+              <li>dbt tests validate key quality checks, including uniqueness, non-null values, and relationships.</li>
+              <li>dbt documentation captures model definitions, field descriptions, and transformation logic.</li>
+              <li>dbt lineage traces the flow of data, making dependencies easier to maintain and validate.</li>
+            </ul>
+            <div class="kpi-list">
+              <div><strong>Staging</strong><br>Standardizes raw source tables and prepares clean references for downstream logic.</div>
+              <div><strong>Intermediate</strong><br>Applies reusable business logic for customers, employee roles, vehicle status, financials, parts costs, and enriched sales.</div>
+              <div><strong>Marts</strong><br>Creates reporting-ready dimensions, facts, and aggregate models for dashboard consumption.</div>
+              <div><strong>Testing &amp; documentation</strong><br>Documents models and validates important uniqueness, non-null, and relationship expectations.</div>
+            </div>
+            <div class="two-col">
+              <figure class="figure">
+                <img src="assets/dbt-lineage.PNG" alt="dbt lineage screenshot showing a Snowflake source table flowing into a staging vehicle model and downstream intermediate, fact, dimension, and aggregate models.">
+                <figcaption>dbt lineage view showing source-to-mart dependencies across the transformation layer.</figcaption>
+              </figure>
+              <figure class="figure">
+                <img src="assets/dbt-models.PNG" alt="Visual Studio Code screenshot showing dbt models organized into staging, intermediate, and mart folders with dbt project configuration.">
+                <figcaption>dbt project structure showing staged, reusable, and reporting-ready model organization.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="case-section" id="reporting">
+            <h2 class="case-card-title">Dashboard and Reporting Layer</h2>
+            <p>The Power BI reporting layer connects to Snowflake mart tables and organizes dealership performance into the following reports:</p>
+            <ul>
+              <li>Executive reports track net income, gross sales income, vehicles sold, average profit per vehicle, average inventory age, and inventory value.</li>
+              <li>Monthly sales reports support year-to-date performance and sales agent analysis.</li>
+              <li>Inventory reports monitor vehicle aging, inventory value, and operational inventory health.</li>
+              <li>Parts reports analyze parts spend and cost activity.</li>
+              <li>Seller history reports support seller-level risk review.</li>
+            </ul>
+            <div class="dashboard-embed"><iframe title="Onyx Auto Dealership Operations Dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiZTUyOThhMmQtZDA0ZS00MDg3LTkwOWEtMTJiMTBiZGIwYmNkIiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" frameborder="0" allowFullScreen="true"></iframe></div>
+            <div class="two-col">
+              <figure class="figure"><img src="assets/powerbi-monthly-sales-report.PNG" alt="Power BI monthly sales report showing year-to-date net income, gross sales, vehicles sold, monthly sales drilldown, and sales agent net income performance."><figcaption>Monthly sales report with year-to-date performance and sales-agent analysis.</figcaption></figure>
+              <figure class="figure"><img src="assets/powerbi-inventory-report.PNG" alt="Power BI active inventory report showing vehicles in inventory, inventory value, average unsold days in inventory, unsold vehicles over 60 days, turnover rate, inventory details, and aging distribution."><figcaption>Active inventory report showing inventory value, vehicle aging, and operational inventory health.</figcaption></figure>
+            </div>
+          </section>
+
+          <section class="case-section" id="automation">
+            <h2 class="case-card-title">Orchestration</h2>
+            <p>Apache Airflow automates the Onyx Auto pipeline by coordinating ingestion, transformation, reporting refresh, and failure alerts. Instead of running each step manually, the workflow runs as a scheduled DAG with clear dependencies, making the project more production-like and easier to monitor.</p>
+            <ul>
+              <li>The workflow triggers the Airbyte sync between MySQL and Snowflake, then waits for ingestion to complete.</li>
+              <li>After Airbyte syncs the source data, dbt rebuilds all its models.</li>
+              <li>Power BI refreshes after the mart tables are updated, ensuring reports have the latest data.</li>
+              <li>Microsoft Teams alerts notify users of any pipeline task failures.</li>
+            </ul>
+            <figure class="figure">
+              <img src="assets/airflow-dag-graph.PNG" alt="Airflow DAG graph showing tasks for starting the pipeline, triggering Airbyte sync, waiting for Airbyte sync, running dbt build, refreshing Power BI semantic model, and ending the pipeline.">
+              <figcaption>Airflow DAG graph showing the scheduled pipeline sequence from ingestion to Power BI refresh.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/teams-pipeline-failure-alerts.PNG" alt="Microsoft Teams pipeline alerts channel showing automated failure notifications for the Onyx Auto pipeline.">
+              <figcaption>Microsoft Teams failure alerts generated by the Airflow pipeline failure callback.</figcaption>
+            </figure>
+          </section>
+
+          <section class="case-section" id="skills">
+            <h2 class="case-card-title">Skills Demonstrated</h2>
+            <ul>
+              <li>Built an end-to-end analytics pipeline that moves dealership data from a PHP/MySQL source system into Snowflake, dbt, Power BI, and Airflow.</li>
+              <li>Modeled raw data into staging, intermediate, and mart layers.</li>
+              <li>Added dbt tests, documentation, and lineage to improve data quality, transparency, and maintainability.</li>
+              <li>Organized Snowflake into separate raw and analytics schemas to keep source data separate from analytics-ready data.</li>
+              <li>Built Power BI reports from curated mart tables to track sales performance, inventory health, parts costs, and seller risk.</li>
+              <li>Automated the refresh workflow with Apache Airflow and Microsoft Teams alerts for pipeline failure visibility.</li>
+            </ul>
+          </section>
+
+          <section class="case-section" id="impact">
+            <h2 class="case-card-title">Project Impact</h2>
+            <p>Onyx Auto shows how dealership data can be turned into a reliable and scalable reporting workflow instead of remaining locked in transactional tables. The project improves visibility into key metrics and KPIs while making the reporting process automated and easy to maintain.</p>
+            <ul>
+              <li>Created an analytics workflow that connects operational data capture, warehouse modeling, dashboard reporting, and scheduled refreshes.</li>
+              <li>Improved reporting readiness by turning normalized dealership records into structured models built for business analysis.</li>
+              <li>Supported faster performance review through dashboards for executive KPIs, monthly sales, inventory health, parts activity, and seller history.</li>
+              <li>Strengthened data trust with dbt tests, documentation, and lineage across the transformation layer.</li>
+              <li>Reduced manual refresh effort by using Airflow to coordinate ingestion, transformation, Power BI refresh, and failure alerts.</li>
+            </ul>
+            <div class="button-row">
+              <a class="btn btn-primary" href="https://app.powerbi.com/view?r=eyJrIjoiZTUyOThhMmQtZDA0ZS00MDg3LTkwOWEtMTJiMTBiZGIwYmNkIiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" target="_blank" rel="noopener">View Live Dashboard</a>
+              <a class="btn btn-secondary" href="https://github.com/CStoerck/Onyx-Auto-Dealership-Analytics-Platform.git" target="_blank" rel="noopener">View GitHub Repository</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container">© 2026 Cody Stoerck. <a href="index.html">Back to portfolio home</a>.</div></footer>
+  <script>
+    document.querySelectorAll('.figure img').forEach((img) => {
+      img.setAttribute('tabindex', '0');
+      img.addEventListener('click', () => openImageModal(img));
+      img.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openImageModal(img);
+        }
+      });
+    });
+    function openImageModal(img) {
+      const modal = document.createElement('div');
+      modal.className = 'image-modal';
+      modal.innerHTML = `
+        <button class="image-modal-close" aria-label="Close enlarged image">&times;</button>
+        <img src="${img.src}" alt="${img.alt}">
+      `;
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal || event.target.classList.contains('image-modal-close')) {
+          modal.remove();
+        }
+      });
+      document.addEventListener('keydown', function closeOnEscape(event) {
+        if (event.key === 'Escape') {
+          modal.remove();
+          document.removeEventListener('keydown', closeOnEscape);
+        }
+      });
+      document.body.appendChild(modal);
+    }
+  </script>
+</body>
+</html>
