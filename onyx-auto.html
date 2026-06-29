@@ -83,7 +83,22 @@
             <figure class="figure">
               <img src="assets/architecture_diagram.png" alt="Onyx Auto architecture diagram showing PHP and MySQL source systems, Airbyte ingestion, Snowflake raw staging intermediate and mart layers, dbt transformations, Power BI reporting, Airflow orchestration, Docker, and Microsoft Teams alerts.">
               <figcaption>End-to-end Onyx Auto architecture showing the source-to-dashboard workflow.</figcaption>
-            </figure>
+            </figure>     
+            <p>
+              These screenshots show how dealership records are entered into the PHP/MySQL source application before the data flows into the analytics pipeline.
+            </p>
+          
+            <div class="two-col">
+              <figure class="figure">
+                <img src="assets/php-add-vehicle.PNG" alt="Onyx Auto PHP source application add new vehicle page showing customer lookup, vehicle details, color selection, seller details, and a save vehicle and seller button.">
+                <figcaption>New vehicle entry form used to capture vehicle, seller, and acquisition records into the MySQL source system.</figcaption>
+              </figure>
+          
+              <figure class="figure">
+                <img src="assets/php-add-part.PNG" alt="Onyx Auto PHP source application add parts page showing vendor lookup, vendor details, part details, unit price, quantity, and place order button for a specific vehicle VIN.">
+                <figcaption>Parts order form used to capture vendor and parts activity tied to a specific vehicle VIN.</figcaption>
+              </figure>
+            </div>
           </section>
 
           <section class="case-section" id="workflow">
