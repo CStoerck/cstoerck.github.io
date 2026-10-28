@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Onyx Auto Case Study | Cody Stoerck</title>
-  <meta name="description" content="Recruiter-friendly case study for Onyx Auto, an end-to-end dealership analytics engineering platform using PHP, MySQL, Airbyte, Snowflake, dbt, Apache Airflow, Docker, Microsoft Teams alerts, and Power BI.">
+  <meta name="description" content="Recruiter-friendly case study for Onyx Auto, an end-to-end dealership analytics engineering platform using PHP, MySQL, Airbyte, Snowflake, dbt, Apache Airflow, GitHub Actions CI/CD, Docker, Microsoft Teams alerts, and Power BI.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,11 +25,12 @@
     <section class="case-hero">
       <div class="container">
         <a class="breadcrumb" href="index.html#projects">← Back to projects</a>
-        <h1>Onyx Auto: End-to-End Dealership BI & Analytics Platform</h1>
-        <p class="lede">Onyx Auto is an end-to-end BI and analytics project that shows how a used car dealership can turn raw operational data into automated business reporting. The project starts with a PHP and MySQL source application that captures dealership activity. Airbyte ingests the operational data into Snowflake. dbt then models the data using a medallion architecture with staging, intermediate, and mart layers. Power BI pulls data from Snowflake to visualize dealership performance, and Apache Airflow orchestrates the daily refresh workflow.</p>
+        <h1>Onyx Auto: End-to-End Dealership BI &amp; Analytics Platform</h1>
+        <p class="lede">Onyx Auto is an end-to-end BI and analytics engineering project that shows how a used car dealership can turn raw operational data into automated, governed business reporting. The project starts with a PHP and MySQL source application that captures dealership activity. Airbyte ingests the operational data into Snowflake. dbt then models the data using a medallion architecture with staging, intermediate, and mart layers. Power BI pulls data from Snowflake to visualize dealership performance, Apache Airflow orchestrates the daily refresh workflow, and GitHub Actions automates CI/CD testing and live dbt documentation deployment.</p>
         <div class="button-row">
           <a class="btn btn-primary" href="https://app.powerbi.com/view?r=eyJrIjoiZTUyOThhMmQtZDA0ZS00MDg3LTkwOWEtMTJiMTBiZGIwYmNkIiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" target="_blank" rel="noopener">Live Power BI Dashboard</a>
-          <a class="btn btn-secondary" href="https://github.com/CStoerck/Onyx-Auto-Dealership-Analytics-Platform.git" target="_blank" rel="noopener">GitHub Repository</a>
+          <a class="btn btn-secondary" href="https://cstoerck.github.io/Onyx-Auto-Dealership-Analytics-Platform/" target="_blank" rel="noopener">Live dbt Docs &amp; Lineage</a>
+          <a class="btn btn-secondary" href="https://github.com/CStoerck/Onyx-Auto-Dealership-Analytics-Platform" target="_blank" rel="noopener">GitHub Repository</a>
         </div>
       </div>
     </section>
@@ -43,6 +44,7 @@
           <a href="#workflow">Transformation Layer</a>
           <a href="#reporting">Reporting Layer</a>
           <a href="#automation">Orchestration</a>
+          <a href="#cicd">CI/CD &amp; Governance</a>
           <a href="#skills">Skills</a>
           <a href="#impact">Impact</a>
         </aside>
@@ -50,8 +52,9 @@
           <section class="case-section" id="summary">
             <h2 class="case-card-title">Executive Summary</h2>
             <ul>
-              <li>Captured operational data and built an end-to-end analytics platform that turns the raw data into trusted reporting.</li>
+              <li>Captured operational data and built an end-to-end analytics platform that turns raw records into trusted reporting.</li>
               <li>Designed a pipeline that ingests, cleans, transforms, models, and orchestrates dealership data for analytics.</li>
+              <li>Implemented automated CI/CD workflows with GitHub Actions, Pytest, and dbt Slim CI to validate code changes and publish live model documentation.</li>
             </ul>
           </section>
 
@@ -72,13 +75,14 @@
 
           <section class="case-section" id="architecture">
             <h2 class="case-card-title">Solutions Architecture</h2>
-            <p>The platform follows a source-to-dashboard analytics workflow. Dealership users enter operational records through a PHP frontend, and the data is stored in a MySQL transactional database. Airbyte then moves the source data into Snowflake, where dbt transforms the raw tables into clean reporting models across staging, intermediate, and mart layers. Power BI connects to the final mart layer for reporting, while Apache Airflow keeps the refresh process running in the right order.</p>
+            <p>The platform follows a source-to-dashboard analytics workflow. Dealership users enter operational records through a PHP frontend, and the data is stored in a MySQL transactional database. Airbyte then moves the source data into Snowflake, where dbt transforms the raw tables into clean reporting models across staging, intermediate, and mart layers. Power BI connects to the final mart layer for reporting, Apache Airflow keeps the daily refresh process running in the right order, and GitHub Actions governs code changes and documentation.</p>
             <ul>
               <li>PHP frontend application captures operational records and stores them in a MySQL transactional database.</li>
               <li>Airbyte ingests raw MySQL data into a Snowflake analytical database.</li>
               <li>dbt transforms the raw data into analytics-ready tables through staging, intermediate, and mart layers.</li>
               <li>Power BI consumes the final mart layer for executive reporting.</li>
               <li>Apache Airflow orchestrates the refresh process and sends Microsoft Teams alerts when pipeline failures occur.</li>
+              <li>GitHub Actions runs automated DAG integrity tests, dbt Slim CI state comparisons, and static dbt documentation deployments.</li>
             </ul>
             <figure class="figure">
               <img src="assets/architecture_diagram.png" alt="Onyx Auto architecture diagram showing PHP and MySQL source systems, Airbyte ingestion, Snowflake raw staging intermediate and mart layers, dbt transformations, Power BI reporting, Airflow orchestration, Docker, and Microsoft Teams alerts.">
@@ -87,13 +91,13 @@
             <p>
               These screenshots show how dealership records are entered into the PHP/MySQL source application before the data flows into the analytics pipeline.
             </p>
-          
+           
             <div class="two-col">
               <figure class="figure">
                 <img src="assets/php-add-vehicle.PNG" alt="Onyx Auto PHP source application add new vehicle page showing customer lookup, vehicle details, color selection, seller details, and a save vehicle and seller button.">
                 <figcaption>New vehicle entry form used to capture vehicle, seller, and acquisition records into the MySQL source system.</figcaption>
               </figure>
-          
+           
               <figure class="figure">
                 <img src="assets/php-add-part.PNG" alt="Onyx Auto PHP source application add parts page showing vendor lookup, vendor details, part details, unit price, quantity, and place order button for a specific vehicle VIN.">
                 <figcaption>Parts order form used to capture vendor and parts activity tied to a specific vehicle VIN.</figcaption>
@@ -151,7 +155,7 @@
             <p>Apache Airflow automates the Onyx Auto pipeline by coordinating ingestion, transformation, reporting refresh, and failure alerts. Instead of running each step manually, the workflow runs as a scheduled DAG with clear dependencies, making the project more production-like and easier to monitor.</p>
             <ul>
               <li>The workflow triggers the Airbyte sync between MySQL and Snowflake, then waits for ingestion to complete.</li>
-              <li>After Airbyte syncs the source data, dbt rebuilds all its models.</li>
+              <li>After Airbyte syncs the source data, dbt rebuilds all production models.</li>
               <li>Power BI refreshes after the mart tables are updated, ensuring reports have the latest data.</li>
               <li>Microsoft Teams alerts notify users of any pipeline task failures.</li>
             </ul>
@@ -165,31 +169,50 @@
             </figure>
           </section>
 
+          <section class="case-section" id="cicd">
+            <h2 class="case-card-title">CI/CD and Data Governance</h2>
+            <p>To prevent code changes from breaking downstream reporting, the platform uses a 3-stage GitHub Actions CI/CD workflow. Every push and pull request automatically validates orchestration logic, checks dbt model dependencies, and updates the live documentation site.</p>
+            <ul>
+              <li>Pytest loads the Airflow DagBag in an isolated runner to verify the DAG parses with zero import errors and maintains the expected task dependency chain.</li>
+              <li>A custom dbt schema routing macro isolates pull request builds into temporary CI schemas while keeping production schemas clean across staging, intermediate, and mart layers.</li>
+              <li>dbt parses the full transformation graph and runs Slim CI state comparisons against the production manifest to identify modified models and downstream impacts.</li>
+              <li>GitHub Pages automatically builds and hosts the static dbt documentation and interactive lineage graph on merges to the main branch.</li>
+            </ul>
+            <div class="kpi-list">
+              <div><strong>DAG integrity</strong><br>Validates Airflow syntax, variable handling, and task dependencies with Pytest before deployment.</div>
+              <div><strong>Schema isolation</strong><br>Routes pull request builds into isolated CI schemas so production mart tables remain protected.</div>
+              <div><strong>dbt Slim CI</strong><br>Compares code changes against the production manifest to target modified models and downstream dependencies.</div>
+              <div><strong>Live dbt docs</strong><br>Automatically compiles and deploys interactive model documentation and lineage to GitHub Pages.</div>
+            </div>
+          </section>
+
           <section class="case-section" id="skills">
             <h2 class="case-card-title">Skills Demonstrated</h2>
             <ul>
               <li>Built an end-to-end analytics pipeline that moves dealership data from a PHP/MySQL source system into Snowflake, dbt, Power BI, and Airflow.</li>
-              <li>Modeled raw data into staging, intermediate, and mart layers.</li>
+              <li>Modeled raw data into staging, intermediate, and mart layers using dimensional modeling best practices.</li>
               <li>Added dbt tests, documentation, and lineage to improve data quality, transparency, and maintainability.</li>
-              <li>Organized Snowflake into separate raw and analytics schemas to keep source data separate from analytics-ready data.</li>
+              <li>Organized Snowflake into separate raw and analytics schemas with environment-aware routing macros to keep source, CI, and production data separated.</li>
               <li>Built Power BI reports from curated mart tables to track sales performance, inventory health, parts costs, and seller risk.</li>
-              <li>Automated the refresh workflow with Apache Airflow and Microsoft Teams alerts for pipeline failure visibility.</li>
+              <li>Automated the daily refresh workflow with Apache Airflow and Microsoft Teams alerts for pipeline failure visibility.</li>
+              <li>Implemented a 3-stage GitHub Actions CI/CD pipeline with Pytest DAG unit testing, dbt Slim CI state comparison, and automated GitHub Pages documentation hosting.</li>
             </ul>
           </section>
 
           <section class="case-section" id="impact">
             <h2 class="case-card-title">Project Impact</h2>
-            <p>Onyx Auto shows how dealership data can be turned into a reliable and scalable reporting workflow instead of remaining locked in transactional tables. The project improves visibility into key metrics and KPIs while making the reporting process automated and easy to maintain.</p>
+            <p>Onyx Auto shows how dealership data can be turned into a reliable, governed, and scalable reporting workflow instead of remaining locked in transactional tables. The project improves visibility into key metrics and KPIs while making the reporting and deployment process automated and easy to maintain.</p>
             <ul>
               <li>Created an analytics workflow that connects operational data capture, warehouse modeling, dashboard reporting, and scheduled refreshes.</li>
               <li>Improved reporting readiness by turning normalized dealership records into structured models built for business analysis.</li>
               <li>Supported faster performance review through dashboards for executive KPIs, monthly sales, inventory health, parts activity, and seller history.</li>
-              <li>Strengthened data trust with dbt tests, documentation, and lineage across the transformation layer.</li>
+              <li>Strengthened data trust and deployment safety with dbt tests, Slim CI state checks, automated Airflow DAG testing, and live lineage documentation.</li>
               <li>Reduced manual refresh effort by using Airflow to coordinate ingestion, transformation, Power BI refresh, and failure alerts.</li>
             </ul>
             <div class="button-row">
               <a class="btn btn-primary" href="https://app.powerbi.com/view?r=eyJrIjoiZTUyOThhMmQtZDA0ZS00MDg3LTkwOWEtMTJiMTBiZGIwYmNkIiwidCI6ImMxYTRiYTFiLTk5MDMtNDYxMC04YzU1LWQwYzQwOTJkNjU5OCJ9" target="_blank" rel="noopener">View Live Dashboard</a>
-              <a class="btn btn-secondary" href="https://github.com/CStoerck/Onyx-Auto-Dealership-Analytics-Platform.git" target="_blank" rel="noopener">View GitHub Repository</a>
+              <a class="btn btn-secondary" href="https://cstoerck.github.io/Onyx-Auto-Dealership-Analytics-Platform/" target="_blank" rel="noopener">View Live dbt Docs</a>
+              <a class="btn btn-secondary" href="https://github.com/CStoerck/Onyx-Auto-Dealership-Analytics-Platform" target="_blank" rel="noopener">View GitHub Repository</a>
             </div>
           </section>
         </div>
